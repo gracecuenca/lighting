@@ -31,16 +31,18 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
 
 //limit each component of c to a max of 255
 void limit_color( color * c ) {
+  //if(c > 255){ c = 255; }
 }
 
 //vector functions
 //normalize vetor, should modify the parameter
 void normalize( double *vector ) {
+  vector = calculate_normal(vector);
 }
 
 //Return the dot porduct of a . b
 double dot_product( double *a, double *b ) {
-  return 0;
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
 double *calculate_normal(struct matrix *polygons, int i) {
