@@ -13,12 +13,21 @@ color get_lighting( double *normal, double *view, color alight, double light[2][
 }
 
 color calculate_ambient(color alight, double *areflect ) {
+  //A * Ka
   color a;
+  //red, green, blue
+  a.red = alight.red * areflect[0];
+  a.blue = alight.blue * areflect[1];
+  a.green = alight.green * areflect[2];
   return a;
 }
 
 color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
+  //costheta L(normalized) * n(normalized)
   color d;
+  d.red =
+  d.green =
+  d.blue = 
   return d;
 }
 
@@ -31,13 +40,21 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
 
 //limit each component of c to a max of 255
 void limit_color( color * c ) {
-  //if(c > 255){ c = 255; }
+  c->red = c->red > 255 ? 255 : c->red;
+  c->blue = c->blue > 255 ? 255 : c->blue;
+  c->green = c->green > 255 ? 255 : c->green;
+  c->red = c->red < 0 ? 0 : c->red;
+  c->blue = c->blue < 0 ? 0 : c->blue;
+  c->green = c->green < 0 ? 0 : c->green;
 }
 
 //vector functions
 //normalize vetor, should modify the parameter
 void normalize( double *vector ) {
-  vector = calculate_normal(vector);
+  double L = sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]);
+  vector[0] = vector[0]/L;
+  vector[1] = vector[1]/L;
+  vector[2] = vector[2]/L;
 }
 
 //Return the dot porduct of a . b
