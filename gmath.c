@@ -43,7 +43,6 @@ color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
   return d;
 }
 
-//dot product orders might be messed up
 color calculate_specular(double light[2][3], double *sreflect, double *view, double *normal ) {
   color s;
   //PKs[2(N * L) x N - L * v]
