@@ -40,15 +40,13 @@ int main(int argc, char **argv) {
   areflect[GREEN] = 0.1;
   areflect[BLUE] = 0.1;
 
-  dreflect[RED] = 0.5;
-  dreflect[GREEN] = 0.5;
-  dreflect[BLUE] = 0.5;
+  dreflect[RED] = 0.1;
+  dreflect[GREEN] = 0.9;
+  dreflect[BLUE] = 0.8;
 
   sreflect[RED] = 0.5;
-  sreflect[GREEN] = 0.5;
+  sreflect[GREEN] = 0.9;
   sreflect[BLUE] = 0.5;
-
-
 
   screen s;
   zbuffer zb;

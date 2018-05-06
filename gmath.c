@@ -35,7 +35,6 @@ color calculate_ambient(color alight, double *areflect ) {
 color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
   //costheta L(normalized) * n(normalized)
   //PKd(N(normalized * I(normalized)))
-  //might be over way around
   double dot = dot_product(light[LOCATION], normal);
   color d;
   d.red = light[COLOR][RED] * dot * dreflect[RED];
