@@ -1,0 +1,34 @@
+push
+move
+100 200 0
+sphere
+0 0 0 80
+pop
+push
+move
+200 200 0
+sphere
+0 0 0 80
+pop
+push
+move
+300 200 0
+sphere
+0 0 0 80
+pop
+push
+move
+400 200 0
+sphere
+0 0 0 80
+pop
+push
+move
+250 300 0
+rotate
+x 450
+torus
+0 0 0 40 125
+display
+save
+dumbbell.png
