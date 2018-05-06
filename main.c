@@ -20,9 +20,9 @@ int main(int argc, char **argv) {
   double dreflect[3];
   double sreflect[3];
 
-  ambient.red = 50;
-  ambient.green = 50;
-  ambient.blue = 50;
+  ambient.red = 255;
+  ambient.green = 255;
+  ambient.blue = 255;
 
   light[LOCATION][0] = 0.5;
   light[LOCATION][1] = 0.75;
@@ -40,12 +40,12 @@ int main(int argc, char **argv) {
   areflect[GREEN] = 0.1;
   areflect[BLUE] = 0.1;
 
-  dreflect[RED] = 0.1;
-  dreflect[GREEN] = 0.9;
-  dreflect[BLUE] = 0.8;
+  dreflect[RED] = 0.5;
+  dreflect[GREEN] = 0.5;
+  dreflect[BLUE] = 0.5;
 
   sreflect[RED] = 0.5;
-  sreflect[GREEN] = 0.9;
+  sreflect[GREEN] = 0.5;
   sreflect[BLUE] = 0.5;
 
   screen s;

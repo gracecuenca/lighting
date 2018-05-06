@@ -35,11 +35,11 @@ color calculate_ambient(color alight, double *areflect ) {
 color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
   //costheta L(normalized) * n(normalized)
   //PKd(N(normalized * I(normalized)))
-  double dot = dot_product(light[LOCATION], normal);
+  double dot = dot_product(normal, light[LOCATION]);
   color d;
   d.red = light[COLOR][RED] * dot * dreflect[RED];
   d.green = light[COLOR][GREEN] * dot * dreflect[GREEN];
-  d.blue = light[COLOR][GREEN] * dot * dreflect[BLUE];
+  d.blue = light[COLOR][BLUE] * dot * dreflect[BLUE];
   return d;
 }
 
@@ -47,18 +47,25 @@ color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
 color calculate_specular(double light[2][3], double *sreflect, double *view, double *normal ) {
   color s;
   //PKs[2(N * L) x N - L * v]
+  //initializing
+  s.red = 0;
+  s.green = 0;
+  s.blue = 0;
+  if(dot_product(normal, light[LOCATION]) <= 0){ return s; }
+  double temp[3];
   double R = 2*dot_product(normal, light[LOCATION]);
-  normal[RED] = normal[RED] * R;
-  normal[GREEN] = normal[GREEN] * R;
-  normal[BLUE] = normal[BLUE] * R;
+  temp[RED] = normal[RED] * R - light[LOCATION][RED];
+  temp[GREEN] = normal[GREEN] * R - light[LOCATION][GREEN];
+  temp[BLUE] = normal[BLUE] * R - light[LOCATION][BLUE];
   //cos between r and v = r * v
-  double * reflected = normal;
-  double rv = dot_product(reflected, view);
-  rv = rv > 0 ? rv : 0;
-  rv = pow(rv, SPECULAR_EXP);
-  s.red = light[COLOR][RED] * rv * sreflect[RED];
-  s.green = light[COLOR][GREEN] * rv * sreflect[GREEN];
-  s.red = light[COLOR][BLUE] * rv * sreflect[BLUE];
+  //double * reflected = normal;
+  //double rv = dot_product(reflected, view);
+  //rv = rv > 0 ? rv : 0;
+  double dot = pow(dot_product(temp, view), 16);
+  s.red = light[COLOR][RED] * dot * sreflect[RED];
+  s.green = light[COLOR][GREEN] * dot * sreflect[GREEN];
+  s.red = light[COLOR][BLUE] * dot * sreflect[BLUE];
+  limit_color(&s);
   return s;
 }
 
@@ -66,20 +73,20 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
 //limit each component of c to a max of 255
 void limit_color( color * c ) {
   c->red = c->red > 255 ? 255 : c->red;
-  c->blue = c->blue > 255 ? 255 : c->blue;
   c->green = c->green > 255 ? 255 : c->green;
+  c->blue = c->blue > 255 ? 255 : c->blue;
   c->red = c->red < 0 ? 0 : c->red;
-  c->blue = c->blue < 0 ? 0 : c->blue;
   c->green = c->green < 0 ? 0 : c->green;
+  c->blue = c->blue < 0 ? 0 : c->blue;
 }
 
 //vector functions
 //normalize vetor, should modify the parameter
 void normalize( double *vector ) {
-  double L = sqrt(vector[RED] * vector[RED] + vector[GREEN] * vector[GREEN] + vector[BLUE] * vector[BLUE]);
-  vector[RED] = vector[RED]/L;
-  vector[GREEN] = vector[GREEN]/L;
-  vector[BLUE] = vector[BLUE]/L;
+  double L = sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]);
+  vector[0] = vector[RED]/L;
+  vector[1] = vector[GREEN]/L;
+  vector[2] = vector[BLUE]/L;
 }
 
 //Return the dot porduct of a . b
